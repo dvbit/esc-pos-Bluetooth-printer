@@ -1,0 +1,107 @@
+print:
+  name: Stampa su ESC/POS
+  description: Invia un lavoro di stampa a una stampante termica ESC/POS via Bluetooth.
+  target:
+    entity:
+      domain: sensor
+      integration: escpos_printer
+  fields:
+    entry_id:
+      name: ID Integrazione
+      description: ID della voce di configurazione della stampante (dalla pagina Integrazioni).
+      required: true
+      example: "abc123def456"
+      selector:
+        text:
+
+    message:
+      name: Messaggio
+      description: Il testo principale da stampare.
+      required: true
+      example: "Ordine #1234 ricevuto!"
+      selector:
+        text:
+          multiline: true
+
+    title:
+      name: Titolo
+      description: Titolo opzionale, stampato in grassetto centrato sopra il messaggio.
+      required: false
+      example: "RICEVUTA"
+      selector:
+        text:
+
+    cut:
+      name: Taglia carta
+      description: Esegue il taglio automatico della carta al termine della stampa.
+      required: false
+      default: true
+      selector:
+        boolean:
+
+    bold:
+      name: Grassetto
+      description: Stampa il messaggio in grassetto.
+      required: false
+      default: false
+      selector:
+        boolean:
+
+    align:
+      name: Allineamento
+      description: Allineamento orizzontale del testo.
+      required: false
+      default: "left"
+      selector:
+        select:
+          options:
+            - label: "Sinistra"
+              value: "left"
+            - label: "Centro"
+              value: "center"
+            - label: "Destra"
+              value: "right"
+
+    size:
+      name: Dimensione testo
+      description: Dimensione del carattere per il messaggio principale.
+      required: false
+      default: "normal"
+      selector:
+        select:
+          options:
+            - label: "Normale"
+              value: "normal"
+            - label: "Grande (2x)"
+              value: "large"
+            - label: "Piccolo"
+              value: "small"
+
+    qrcode:
+      name: QR Code
+      description: >
+        Testo o URL da stampare come QR code sotto il messaggio.
+        Lascia vuoto per non stampare il QR.
+      required: false
+      example: "https://example.com/order/1234"
+      selector:
+        text:
+
+    barcode:
+      name: Codice a barre (CODE128)
+      description: >
+        Stringa da codificare come codice a barre CODE128.
+        Lascia vuoto per non stampare il codice a barre.
+      required: false
+      example: "1234567890"
+      selector:
+        text:
+
+    raw_bytes:
+      name: Byte raw ESC/POS (base64)
+      description: >
+        Comandi ESC/POS raw codificati in base64. Per utenti avanzati.
+        Inviati alla stampante esattamente come ricevuti, dopo il messaggio.
+      required: false
+      selector:
+        text:

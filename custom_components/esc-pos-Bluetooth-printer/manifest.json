@@ -1,0 +1,14 @@
+{
+  "domain": "escpos_printer",
+  "name": "ESC/POS Bluetooth Printer",
+  "version": "1.1.0",
+  "documentation": "https://github.com/python-escpos/python-escpos",
+  "issue_tracker": "",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": [],
+  "iot_class": "local_push",
+  "config_flow": true,
+  "bluetooth": [],
+  "after_dependencies": ["bluetooth"]
+}
