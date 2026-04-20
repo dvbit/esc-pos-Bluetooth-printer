@@ -1,0 +1,88 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configurar impresora Bluetooth ESC/POS",
+        "description": "Introduzca la dirección MAC Bluetooth de su impresora térmica y el canal RFCOMM (normalmente 1).",
+        "data": {
+          "mac_address": "Dirección MAC Bluetooth",
+          "rfcomm_channel": "Canal RFCOMM"
+        },
+        "data_description": {
+          "mac_address": "Formato: AA:BB:CC:DD:EE:FF — encuentre la MAC en la hoja de autotest de la impresora",
+          "rfcomm_channel": "Normalmente 1. Pruebe 2 si la conexión falla."
+        }
+      },
+      "test_connection": {
+        "title": "Probar conexión Bluetooth",
+        "description": "Pulse **Siguiente** para probar la conexión con la impresora `{mac}` en el canal `{channel}`.\n\n⚠️ Asegúrese de que la impresora está **encendida** y el LED **parpadea** (modo detectable)."
+      },
+      "bluetooth_pairing_guide": {
+        "title": "⚠️ Impresora no emparejada — Siga estos pasos",
+        "description": "La impresora `{mac}` aún no está emparejada con Home Assistant.\n\n**Paso 1** — Abra el **Terminal de HA** (Configuración → Complementos → Terminal & SSH)\n\n**Paso 2** — Ejecute estos comandos uno por uno:\n\n```\nbluetoothctl\npower on\nagent on\ndefault-agent\nscan on\n```\n\nEspere a que `{mac}` aparezca en la lista, luego:\n\n```\nscan off\n{cmd_pair}\n```\n\nSi solicita un PIN, introduzca: `{pin}`\n\nFinalmente:\n\n```\n{cmd_trust}\nquit\n```\n\n**Paso 3** — Vuelva aquí y pulse **Siguiente** para reintentar la conexión.\n\n---\n💡 **Alternativamente**, una vez configurada la integración encontrará un botón **\"Emparejar Bluetooth\"** en la tarjeta del dispositivo que ejecuta estos comandos automáticamente."
+      },
+      "printer_settings": {
+        "title": "✅ Conexión exitosa — Configuración de la impresora",
+        "description": "Configure las preferencias de su impresora.",
+        "data": {
+          "printer_name": "Nombre de la impresora (opcional)",
+          "paper_width": "Ancho del papel",
+          "encoding": "Codificación de caracteres",
+          "timeout": "Tiempo de espera de conexión (segundos)"
+        },
+        "data_description": {
+          "printer_name": "Dejar en blanco para nombre automático",
+          "encoding": "cp437 o cp1252 para la mayoría de impresoras térmicas económicas"
+        }
+      }
+    },
+    "error": {
+      "invalid_mac": "Formato de dirección MAC no válido. Use AA:BB:CC:DD:EE:FF",
+      "invalid_channel": "El canal RFCOMM debe estar entre 1 y 30",
+      "device_not_found": "Impresora no encontrada — verifique el emparejamiento Bluetooth",
+      "connection_refused": "Conexión rechazada — pruebe el canal RFCOMM 2",
+      "connection_timeout": "Tiempo de espera — impresora fuera de alcance u ocupada",
+      "bluetooth_unavailable": "Bluetooth no disponible en este host",
+      "bluetooth_not_supported": "Bluetooth Classic (RFCOMM) no compatible con este sistema",
+      "cannot_connect": "No se puede conectar con la impresora",
+      "unknown_error": "Error desconocido durante la prueba de conexión",
+      "already_configured": "Esta impresora ya está configurada"
+    },
+    "abort": {
+      "already_configured": "Esta impresora ya está configurada"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opciones de la impresora",
+        "data": {
+          "paper_width": "Ancho del papel",
+          "encoding": "Codificación de caracteres",
+          "timeout": "Tiempo de espera de conexión (segundos)",
+          "rfcomm_channel": "Canal RFCOMM"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Estado",
+        "state": {
+          "online": "En línea",
+          "offline": "Sin conexión",
+          "error": "Error",
+          "unknown": "Desconocido"
+        }
+      },
+      "print_count": {"name": "Número de impresiones"},
+      "last_print": {"name": "Última impresión"},
+      "last_error": {"name": "Último error"}
+    },
+    "button": {
+      "pair_button": {"name": "Emparejar Bluetooth"},
+      "test_print_button": {"name": "Imprimir página de prueba"}
+    }
+  }
+}

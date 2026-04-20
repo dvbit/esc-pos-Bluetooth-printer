@@ -1,0 +1,88 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure ESC/POS Bluetooth Printer",
+        "description": "Enter the Bluetooth MAC address of your thermal printer and the RFCOMM channel (usually 1).",
+        "data": {
+          "mac_address": "Bluetooth MAC Address",
+          "rfcomm_channel": "RFCOMM Channel"
+        },
+        "data_description": {
+          "mac_address": "Format: AA:BB:CC:DD:EE:FF — find the MAC on the printer self-test printout",
+          "rfcomm_channel": "Usually 1. Try 2 if the connection fails."
+        }
+      },
+      "test_connection": {
+        "title": "Test Bluetooth Connection",
+        "description": "Press **Next** to test the connection to printer `{mac}` on channel `{channel}`.\n\n⚠️ Make sure the printer is **powered on** and the LED is **blinking** (discoverable mode)."
+      },
+      "bluetooth_pairing_guide": {
+        "title": "⚠️ Printer Not Paired — Follow These Steps",
+        "description": "Printer `{mac}` is not yet paired with Home Assistant.\n\n**Step 1** — Open the **HA Terminal** (Settings → Add-ons → Terminal & SSH)\n\n**Step 2** — Run these commands one by one:\n\n```\nbluetoothctl\npower on\nagent on\ndefault-agent\nscan on\n```\n\nWait for `{mac}` to appear in the list, then:\n\n```\nscan off\n{cmd_pair}\n```\n\nIf prompted for a PIN, enter: `{pin}`\n\nFinally:\n\n```\n{cmd_trust}\nquit\n```\n\n**Step 3** — Return here and press **Next** to retry the connection.\n\n---\n💡 **Alternatively**, once configured you will find a **\"Pair Bluetooth\"** button in the device card that runs these commands automatically."
+      },
+      "printer_settings": {
+        "title": "✅ Connection Successful — Printer Settings",
+        "description": "Configure your printer preferences.",
+        "data": {
+          "printer_name": "Printer name (optional)",
+          "paper_width": "Paper width",
+          "encoding": "Character encoding",
+          "timeout": "Connection timeout (seconds)"
+        },
+        "data_description": {
+          "printer_name": "Leave blank for an automatic name",
+          "encoding": "cp437 or cp1252 for most budget thermal printers"
+        }
+      }
+    },
+    "error": {
+      "invalid_mac": "Invalid MAC address format. Use AA:BB:CC:DD:EE:FF",
+      "invalid_channel": "RFCOMM channel must be between 1 and 30",
+      "device_not_found": "Printer not found — check Bluetooth pairing",
+      "connection_refused": "Connection refused — try RFCOMM channel 2",
+      "connection_timeout": "Timeout — printer out of range or busy",
+      "bluetooth_unavailable": "Bluetooth not available on this host",
+      "bluetooth_not_supported": "Bluetooth Classic (RFCOMM) not supported on this system",
+      "cannot_connect": "Unable to connect to the printer",
+      "unknown_error": "Unknown error during connection test",
+      "already_configured": "This printer is already configured"
+    },
+    "abort": {
+      "already_configured": "This printer is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Printer Options",
+        "data": {
+          "paper_width": "Paper width",
+          "encoding": "Character encoding",
+          "timeout": "Connection timeout (seconds)",
+          "rfcomm_channel": "RFCOMM channel"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Status",
+        "state": {
+          "online": "Online",
+          "offline": "Offline",
+          "error": "Error",
+          "unknown": "Unknown"
+        }
+      },
+      "print_count": {"name": "Print Count"},
+      "last_print": {"name": "Last Print"},
+      "last_error": {"name": "Last Error"}
+    },
+    "button": {
+      "pair_button": {"name": "Pair Bluetooth"},
+      "test_print_button": {"name": "Print Test Page"}
+    }
+  }
+}

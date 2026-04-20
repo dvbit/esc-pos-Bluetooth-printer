@@ -1,0 +1,88 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "ESC/POS Bluetooth-Drucker konfigurieren",
+        "description": "Geben Sie die Bluetooth-MAC-Adresse Ihres Thermodruckers und den RFCOMM-Kanal ein (normalerweise 1).",
+        "data": {
+          "mac_address": "Bluetooth-MAC-Adresse",
+          "rfcomm_channel": "RFCOMM-Kanal"
+        },
+        "data_description": {
+          "mac_address": "Format: AA:BB:CC:DD:EE:FF — die MAC-Adresse finden Sie auf dem Selbsttest-Ausdruck des Druckers",
+          "rfcomm_channel": "Normalerweise 1. Versuchen Sie 2, wenn die Verbindung fehlschlägt."
+        }
+      },
+      "test_connection": {
+        "title": "Bluetooth-Verbindung testen",
+        "description": "Drücken Sie **Weiter**, um die Verbindung zum Drucker `{mac}` auf Kanal `{channel}` zu testen.\n\n⚠️ Stellen Sie sicher, dass der Drucker **eingeschaltet** ist und die LED **blinkt** (Sichtbarkeitsmodus)."
+      },
+      "bluetooth_pairing_guide": {
+        "title": "⚠️ Drucker nicht gekoppelt — Folgen Sie diesen Schritten",
+        "description": "Der Drucker `{mac}` ist noch nicht mit Home Assistant gekoppelt.\n\n**Schritt 1** — Öffnen Sie das **HA-Terminal** (Einstellungen → Add-ons → Terminal & SSH)\n\n**Schritt 2** — Führen Sie diese Befehle nacheinander aus:\n\n```\nbluetoothctl\npower on\nagent on\ndefault-agent\nscan on\n```\n\nWarten Sie, bis `{mac}` in der Liste erscheint, dann:\n\n```\nscan off\n{cmd_pair}\n```\n\nWenn nach einer PIN gefragt wird, geben Sie ein: `{pin}`\n\nZum Schluss:\n\n```\n{cmd_trust}\nquit\n```\n\n**Schritt 3** — Kehren Sie hierher zurück und drücken Sie **Weiter**, um die Verbindung erneut zu versuchen.\n\n---\n💡 **Alternativ** finden Sie nach der Konfiguration eine Schaltfläche **\"Bluetooth koppeln\"** in der Gerätekarte, die diese Befehle automatisch ausführt."
+      },
+      "printer_settings": {
+        "title": "✅ Verbindung erfolgreich — Druckereinstellungen",
+        "description": "Konfigurieren Sie Ihre Druckereinstellungen.",
+        "data": {
+          "printer_name": "Druckername (optional)",
+          "paper_width": "Papierbreite",
+          "encoding": "Zeichenkodierung",
+          "timeout": "Verbindungs-Timeout (Sekunden)"
+        },
+        "data_description": {
+          "printer_name": "Leer lassen für automatischen Namen",
+          "encoding": "cp437 oder cp1252 für die meisten günstigen Thermodrucker"
+        }
+      }
+    },
+    "error": {
+      "invalid_mac": "Ungültiges MAC-Adressformat. Verwenden Sie AA:BB:CC:DD:EE:FF",
+      "invalid_channel": "RFCOMM-Kanal muss zwischen 1 und 30 liegen",
+      "device_not_found": "Drucker nicht gefunden — Bluetooth-Kopplung prüfen",
+      "connection_refused": "Verbindung abgelehnt — RFCOMM-Kanal 2 versuchen",
+      "connection_timeout": "Timeout — Drucker außer Reichweite oder beschäftigt",
+      "bluetooth_unavailable": "Bluetooth auf diesem Host nicht verfügbar",
+      "bluetooth_not_supported": "Bluetooth Classic (RFCOMM) wird auf diesem System nicht unterstützt",
+      "cannot_connect": "Verbindung zum Drucker nicht möglich",
+      "unknown_error": "Unbekannter Fehler beim Verbindungstest",
+      "already_configured": "Dieser Drucker ist bereits konfiguriert"
+    },
+    "abort": {
+      "already_configured": "Dieser Drucker ist bereits konfiguriert"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Druckeroptionen",
+        "data": {
+          "paper_width": "Papierbreite",
+          "encoding": "Zeichenkodierung",
+          "timeout": "Verbindungs-Timeout (Sekunden)",
+          "rfcomm_channel": "RFCOMM-Kanal"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Status",
+        "state": {
+          "online": "Online",
+          "offline": "Offline",
+          "error": "Fehler",
+          "unknown": "Unbekannt"
+        }
+      },
+      "print_count": {"name": "Druckanzahl"},
+      "last_print": {"name": "Letzter Druck"},
+      "last_error": {"name": "Letzter Fehler"}
+    },
+    "button": {
+      "pair_button": {"name": "Bluetooth koppeln"},
+      "test_print_button": {"name": "Testseite drucken"}
+    }
+  }
+}

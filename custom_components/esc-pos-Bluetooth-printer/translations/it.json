@@ -1,0 +1,88 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configura Stampante Bluetooth ESC/POS",
+        "description": "Inserisci l'indirizzo MAC Bluetooth della stampante termica e il canale RFCOMM (di solito 1).",
+        "data": {
+          "mac_address": "Indirizzo MAC Bluetooth",
+          "rfcomm_channel": "Canale RFCOMM"
+        },
+        "data_description": {
+          "mac_address": "Formato: AA:BB:CC:DD:EE:FF — trovi il MAC nel foglio di autostampa della stampante",
+          "rfcomm_channel": "Solitamente 1. Prova 2 se la connessione fallisce."
+        }
+      },
+      "test_connection": {
+        "title": "Test Connessione Bluetooth",
+        "description": "Premi **Avanti** per testare la connessione con la stampante `{mac}` sul canale `{channel}`.\n\n⚠️ Assicurati che la stampante sia **accesa** e il LED **lampeggi** (modalità discoverable)."
+      },
+      "bluetooth_pairing_guide": {
+        "title": "⚠️ Stampante non accoppiata — Segui questi passi",
+        "description": "La stampante `{mac}` non è ancora accoppiata con Home Assistant.\n\n**Passo 1** — Apri il **Terminale HA** (Impostazioni → Add-on → Terminal & SSH)\n\n**Passo 2** — Lancia questi comandi uno per uno:\n\n```\nbluetoothctl\npower on\nagent on\ndefault-agent\nscan on\n```\n\nAspetta che appaia `{mac}` nella lista, poi:\n\n```\nscan off\n{cmd_pair}\n```\n\nSe chiede il PIN, inserisci: `{pin}`\n\nInfine:\n\n```\n{cmd_trust}\nquit\n```\n\n**Passo 3** — Torna qui e premi **Avanti** per ritentare la connessione.\n\n---\n💡 **In alternativa**, dopo aver configurato l'integrazione troverai un pulsante **\"Accoppia Bluetooth\"** nel dispositivo che esegue questi comandi automaticamente."
+      },
+      "printer_settings": {
+        "title": "✅ Connessione riuscita — Impostazioni stampante",
+        "description": "Configura le preferenze della stampante.",
+        "data": {
+          "printer_name": "Nome stampante (opzionale)",
+          "paper_width": "Larghezza carta",
+          "encoding": "Codifica caratteri",
+          "timeout": "Timeout connessione (secondi)"
+        },
+        "data_description": {
+          "printer_name": "Lascia vuoto per nome automatico",
+          "encoding": "cp437 o cp1252 per stampanti Netum e simili"
+        }
+      }
+    },
+    "error": {
+      "invalid_mac": "Formato MAC non valido. Usa AA:BB:CC:DD:EE:FF",
+      "invalid_channel": "Il canale RFCOMM deve essere tra 1 e 30",
+      "device_not_found": "Stampante non trovata — verifica pairing Bluetooth",
+      "connection_refused": "Connessione rifiutata — prova canale RFCOMM 2",
+      "connection_timeout": "Timeout — stampante fuori portata o occupata",
+      "bluetooth_unavailable": "Bluetooth non disponibile su questo host",
+      "bluetooth_not_supported": "Bluetooth Classic (RFCOMM) non supportato su questo sistema",
+      "cannot_connect": "Impossibile connettersi alla stampante",
+      "unknown_error": "Errore sconosciuto durante il test",
+      "already_configured": "Questa stampante è già configurata"
+    },
+    "abort": {
+      "already_configured": "La stampante è già configurata"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Modifica Impostazioni Stampante",
+        "data": {
+          "paper_width": "Larghezza carta",
+          "encoding": "Codifica caratteri",
+          "timeout": "Timeout connessione (secondi)",
+          "rfcomm_channel": "Canale RFCOMM"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Stato",
+        "state": {
+          "online": "Online",
+          "offline": "Offline",
+          "error": "Errore",
+          "unknown": "Sconosciuto"
+        }
+      },
+      "print_count": {"name": "Stampe Effettuate"},
+      "last_print": {"name": "Ultima Stampa"},
+      "last_error": {"name": "Ultimo Errore"}
+    },
+    "button": {
+      "pair_button": {"name": "Accoppia Bluetooth"},
+      "test_print_button": {"name": "Stampa Pagina di Test"}
+    }
+  }
+}
