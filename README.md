@@ -11,7 +11,7 @@ A Home Assistant custom integration for **Bluetooth Classic (RFCOMM/SPP) ESC/POS
 
 ## ✨ Features
 
-- **Zero external dependencies** — uses only Python stdlib (`socket`), no `python-escpos` or `PyBluez` required
+- **Zero external dependencies** — uses only Python stdlib (`socket`), no `python-escpos` or `PyBluez` required- P
 - **Full UI configuration flow** — MAC address entry, automatic connection test, built-in Bluetooth pairing guide
 - **One-click pairing** — dedicated "Pair Bluetooth" button that runs the pairing process automatically
 - **Rich print jobs** — text, titles, bold, alignment, font sizes, QR codes, CODE128 barcodes, raw ESC/POS bytes
